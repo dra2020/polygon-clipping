@@ -1,6 +1,6 @@
 {
-  "name": "polygon-clipping",
-  "version": "0.14.3",
+  "name": "@dra2020/polygon-clipping",
+  "version": "2.0.1",
   "description": "Apply boolean Polygon clipping operations (intersection, union, difference, xor) to your Polygons & MultiPolygons.",
   "main": "dist/polygon-clipping.cjs.js",
   "module": "dist/polygon-clipping.esm.js",
@@ -17,7 +17,7 @@
     "test": "jest",
     "test:debug": "node --inspect-brk node_modules/.bin/jest --runInBand",
     "bench": "node bench/bench.js",
-    "prepublishOnly": "npm-run-all --serial lint docs:lint test build docs:build bench"
+    "pprepublishOnly": "npm-run-all --serial lint docs:lint test build docs:build bench"
   },
   "files": [
     "dist"

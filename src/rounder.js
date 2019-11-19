@@ -1,4 +1,5 @@
 import { cmp } from './flp'
+import { trace } from './trace'
 import SplayTree from 'splaytree'
 
 /**
@@ -47,6 +48,7 @@ class CoordRounder {
   //       to endpoints (to establish independence from the segment
   //       angle for t-intersections).
   round (coord) {
+    trace('CoordRounder.round')
     const node = this.tree.add(coord)
 
     const prevNode = this.tree.prev(node)
