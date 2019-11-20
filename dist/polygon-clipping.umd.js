@@ -826,14 +826,6 @@
     return a < b ? -1 : 1;
   };
 
-  var traces = {};
-  var trace = function trace(s) {
-    var n = traces[s];
-    n = n === undefined ? 1 : n + 1;
-    traces[s] = n;
-    if (n % 10000 == 0) console.log('trace: ' + s + 'called ' + String(n) + ' times');
-  };
-
   /**
    * This class rounds incoming values sufficiently so that
    * floating points problems are, for the most part, avoided.
@@ -867,7 +859,10 @@
       value: function round(x, y) {
         return {
           x: this.xRounder.round(x),
-          y: this.yRounder.round(y)
+          y: this.yRounder.round(y) // This is expensive for large numbers of points - skipping works for our inputs
+          //x: x,
+          //y: y,
+
         };
       }
     }]);
@@ -896,7 +891,6 @@
     _createClass(CoordRounder, [{
       key: "round",
       value: function round(coord) {
-        trace('CoordRounder.round');
         var node = this.tree.add(coord);
         var prevNode = this.tree.prev(node);
 

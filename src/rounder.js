@@ -29,6 +29,9 @@ class PtRounder {
     return {
       x: this.xRounder.round(x),
       y: this.yRounder.round(y),
+      // This is expensive for large numbers of points - skipping works for our inputs
+      //x: x,
+      //y: y,
     }
   }
 }
@@ -48,7 +51,6 @@ class CoordRounder {
   //       to endpoints (to establish independence from the segment
   //       angle for t-intersections).
   round (coord) {
-    trace('CoordRounder.round')
     const node = this.tree.add(coord)
 
     const prevNode = this.tree.prev(node)
