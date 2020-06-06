@@ -1,5 +1,6 @@
 import { cmp } from './flp'
 import { trace } from './trace'
+import { dumptraces } from './trace'
 import SplayTree from 'splaytree'
 
 /**
@@ -23,6 +24,7 @@ class PtRounder {
   reset () {
     this.xRounder = new CoordRounder()
     this.yRounder = new CoordRounder()
+    dumptraces();
   }
 
   round (x, y) {
@@ -56,15 +58,18 @@ class CoordRounder {
     const prevNode = this.tree.prev(node)
     if (prevNode !== null && cmp(node.key, prevNode.key) === 0) {
       this.tree.remove(coord)
+      trace('rounder dup');
       return prevNode.key
     }
 
     const nextNode = this.tree.next(node)
     if (nextNode !== null && cmp(node.key, nextNode.key) === 0) {
       this.tree.remove(coord)
+      trace('rounder dup');
       return nextNode.key
     }
 
+    trace('rounder unique');
     return coord
   }
 }

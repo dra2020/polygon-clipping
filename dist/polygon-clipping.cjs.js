@@ -91,6 +91,20 @@ var cmp = function cmp(a, b) {
   return a < b ? -1 : 1;
 };
 
+var traces = {};
+var trace = function trace(s) {
+  var n = traces[s];
+  n = n === undefined ? 1 : n + 1;
+  traces[s] = n;
+};
+var dumptraces = function dumptraces() {
+  for (var s in traces) {
+    if (traces.hasOwnProperty(s)) console.log('trace: ' + s + ' called ' + String(traces[s]) + ' times');
+  }
+
+  traces = {};
+};
+
 /**
  * This class rounds incoming values sufficiently so that
  * floating points problems are, for the most part, avoided.
@@ -118,6 +132,7 @@ function () {
     value: function reset() {
       this.xRounder = new CoordRounder();
       this.yRounder = new CoordRounder();
+      dumptraces();
     }
   }, {
     key: "round",
@@ -161,6 +176,7 @@ function () {
 
       if (prevNode !== null && cmp(node.key, prevNode.key) === 0) {
         this.tree.remove(coord);
+        trace('rounder dup');
         return prevNode.key;
       }
 
@@ -168,9 +184,11 @@ function () {
 
       if (nextNode !== null && cmp(node.key, nextNode.key) === 0) {
         this.tree.remove(coord);
+        trace('rounder dup');
         return nextNode.key;
       }
 
+      trace('rounder unique');
       return coord;
     }
   }]);
